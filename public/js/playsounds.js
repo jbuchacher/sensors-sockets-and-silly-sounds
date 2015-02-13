@@ -66,7 +66,7 @@ T("audio").load("./drumkit.wav", function() {
 
 var shouldStart = true;
 
-var socketConnection = io.connect('http://10.0.1.1:8080/soundsocket');
+var socketConnection = io.connect('http://10.10.0.84:8080/soundsocket');
 socketConnection.on('connect', function () {
   console.log('connected to socket');
 });

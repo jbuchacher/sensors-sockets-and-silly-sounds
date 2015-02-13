@@ -24,7 +24,7 @@ var getConnections = function() {
 
 var cylonReady = function(my) {
   io
-    .of('/notes')
+    .of('/soundsocket')
     .on('connection', function (socket) {
       registerSocketHandlers(my, socket);
     })
