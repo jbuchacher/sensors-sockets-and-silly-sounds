@@ -37,14 +37,14 @@ var registerSocketHandlers = function(my, socket) {
 
     button.on('push', function() {
       socket.emit({
-        name: 'button',
+        name: 'button' + i,
         value: 'on'
       })
     })
 
     button.on('release', function() {
       socket.emit({
-        name: 'button',
+        name: 'button' + i,
         value: 'off'
       })
     })
