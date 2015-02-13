@@ -22,13 +22,6 @@ var getConnections = function() {
   }
 }
 
-cylon.robot({
-  connections: getConnections(),
-  devices: getDevices()
-}).on('ready', cylonReady);
-
-cylon.start()
-
 var cylonReady = function(my) {
   io
     .of('/notes')
@@ -54,3 +47,10 @@ var registerSocketHandlers = function(my, socket) {
     })
   }
 }
+
+cylon.robot({
+  connections: getConnections(),
+  devices: getDevices()
+}).on('ready', cylonReady);
+
+cylon.start()
