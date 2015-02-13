@@ -10,7 +10,9 @@ server.listen(8080)
 
 var getDevices = function() {
   return {
-    led: { driver: 'led', pin: 13 }
+    button: { driver: 'button', pin: 2 },
+    capacitive_touch: { driver: 'button', pin: 3 },
+    potentiometer: { driver: 'analogSensor', pin: 0, lowerLimit: 100, upperLimit: 900 }
   }
 }
 
@@ -36,5 +38,19 @@ var cylonReady = function(my) {
 }
 
 var registerSocketHandlers = function(my, socket) {
+  for (button in [my.button, my.capacitive_touch]) {
+    button.on('push', function() {
+      socket.emit({
+        name: 'button',
+        value: 'on'
+      })
+    })
 
+    button.on('release', function() {
+      socket.emit({
+        name: 'button',
+        value: 'off'
+      })
+    })
+  }
 }
