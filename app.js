@@ -49,6 +49,14 @@ var registerSocketHandlers = function(my, socket) {
       })
     })
   }
+
+  my.potentiometer.on('analogRead', function() {
+    value = my.potentiometer.analogRead();
+    socket.emit({
+      name: 'potentiometer',
+      value: value
+    })
+  })
 }
 
 cylon.robot({
