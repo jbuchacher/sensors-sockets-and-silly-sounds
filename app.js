@@ -31,7 +31,10 @@ var cylonReady = function(my) {
 }
 
 var registerSocketHandlers = function(my, socket) {
-  for (button in [my.button, my.capacitive_touch]) {
+  buttons = [my.button, my.capacitive_touch];
+  for (var i = 0; i < buttons.length; i++) {
+    var button = buttons[i];
+
     button.on('push', function() {
       socket.emit({
         name: 'button',
