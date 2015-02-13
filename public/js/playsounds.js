@@ -74,7 +74,7 @@ T("audio").load("./drumkit.wav", function() {
     var noteHz0 = sc.Scale.major().degreeToFreq(noteDegree, (60 + noteOffset).midicps(), 0);
     var noteHz1 = sc.Scale.major().degreeToFreq(noteDegree, (60 + noteOffset).midicps(), 1);
     var noteHz2 = sc.Scale.major().degreeToFreq(noteDegree, (60 + noteOffset).midicps(), 2);
-    
+
     if (i % 2 === 0) {
 //      lead.freq.linTo(noteNum.midicps() * 2, "100ms");
       arp0.noteOnWithFreq(noteHz0, playArp0 ? 80 : 0);
@@ -91,9 +91,18 @@ socketConnection.on('connect', function () {
 });
 
 socketConnection.on('potentiometer', function (value) {
-  console.log(value)
+  delay.fb = value / 1024.0;
+  noteOffset = value / 1024.0;
 });
 
-socketConnection.on('button', function (value) {
-  console.log(value)
+socketConnection.on('button0', function (value) {
+  console.log('button0 state: ' + value)
+  playArp0 = value == 'on' ? true : false;
+});
+
+socketConnection.on('button1', function (value) {
+  console.log('button1 state: ' + value)
+  //playArp2 = value == 'on' ? true : false;
+  if (value == 'on')
+    BD.bang();
 });

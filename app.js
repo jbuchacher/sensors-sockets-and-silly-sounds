@@ -30,32 +30,27 @@ var cylonReady = function(my) {
     })
 }
 
+var registerButtonHandler = function(socket, button, buttonNumber) {
+    button.on('push', function() {
+      socket.emit('button' + buttonNumber, 'on')
+    })
+
+    button.on('release', function() {
+      socket.emit('button' + buttonNumber, 'release')
+    })
+}
+
 var registerSocketHandlers = function(my, socket) {
   buttons = [my.button, my.capacitive_touch];
   for (var i = 0; i < buttons.length; i++) {
     var button = buttons[i];
 
-    button.on('push', function() {
-      socket.emit({
-        name: 'button' + i,
-        value: 'on'
-      })
-    })
-
-    button.on('release', function() {
-      socket.emit({
-        name: 'button' + i,
-        value: 'off'
-      })
-    })
+    registerButtonHandler(socket, button, i);
   }
 
   my.potentiometer.on('analogRead', function() {
     value = my.potentiometer.analogRead();
-    socket.emit({
-      name: 'potentiometer',
-      value: value
-    })
+    socket.emit('potentiometer', value);
   })
 }
 
